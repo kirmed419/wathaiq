@@ -32,12 +32,21 @@ export default function Home() {
     <div className="flex flex-1 flex-col">
       <Header />
 
-      {/* Hero: functional title + search, no slogan */}
-      <section className="bg-brand-700 pb-7 pt-1 text-white">
+      {/* Hero: prominent logo + functional title + search, no slogan */}
+      <section className="bg-brand-700 pb-7 pt-3 text-white">
         <div className="mx-auto max-w-3xl px-4">
-          <h1 className={`mb-4 text-xl font-bold ${lang === 'ar' ? 'font-arabic' : ''}`}>
-            {lang === 'ar' ? 'نماذج الطلبات الإدارية' : 'Modèles de demandes administratives'}
-          </h1>
+          <div className="mb-4 flex flex-col items-center text-center">
+            <img
+              src={`${import.meta.env.BASE_URL}logo.png`}
+              alt="Talabi"
+              width={96}
+              height={96}
+              className="mb-3 h-24 w-24 rounded-2xl bg-white p-2 shadow-lg ring-1 ring-white/40"
+            />
+            <h1 className={`text-2xl font-extrabold tracking-tight ${lang === 'ar' ? 'font-arabic' : ''}`}>
+              {lang === 'ar' ? 'نماذج الطلبات الإدارية' : 'Modèles de demandes administratives'}
+            </h1>
+          </div>
           <SearchBar value={query} onChange={setQuery} />
         </div>
       </section>
