@@ -22,7 +22,7 @@ Aucun compte, aucun backend, aucun tracking. Fonctionne **hors connexion** (PWA)
 
 ## Contenu
 
-- **29 modèles** (français + arabe) dans `src/data/templates.ts`
+- **52 modèles** (français + arabe) dans `src/data/templates.ts`
 - 7 catégories : Emploi & Concours · Études & Bourse · État civil & Administration ·
   Consulat & Diaspora · Banque & Finance · Logement · Réclamations
 - Chaque modèle : `fields` (formulaire dynamique), `body_fr` / `body_ar` avec
@@ -45,19 +45,42 @@ Le canal d'acquisition est la recherche organique. Au build, `scripts/prerender.
 - génère un **HTML statique crawlable par modèle** (`dist/lettre/<id>/index.html`)
   avec `<title>`, `meta description`, canonical, Open Graph et le **contenu de la
   lettre visible sans JavaScript** ;
-- génère `dist/sitemap.xml` (accueil + tous les modèles) et `dist/404.html`.
+- génère `dist/sitemap.xml`, `dist/robots.txt` et `dist/404.html`.
 
-Origine canonique configurable : `SITE_ORIGIN=https://mon-domaine.tld npm run build`
-(défaut : `https://talabi.app`). Pensez à mettre à jour la même valeur dans
-`src/lib/seo.ts` et `public/robots.txt`.
+Origine canonique : côté client, elle est déduite automatiquement de l'URL servie
+(`window.location` + base), donc rien à coder en dur. Pour le prérendu (sitemap,
+canonical, Open Graph), passez `SITE_ORIGIN` au build (le workflow GitHub Pages le
+fait pour vous ; défaut local : `https://talabi.app`).
 
-## Déploiement (statique)
+## Déploiement
 
-Build → dossier `dist/`. Fallback SPA fourni pour :
+### GitHub Pages (prêt à l'emploi)
+
+Le workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) construit
+et publie le site à chaque push sur `main`.
+
+1. Créez un dépôt GitHub et poussez le code :
+   ```bash
+   git remote add origin https://github.com/<vous>/<repo>.git
+   git push -u origin main
+   ```
+2. Dans **Settings → Pages**, réglez **Source** sur **GitHub Actions**.
+
+Le workflow détecte automatiquement le `base path` et l'URL :
+- dépôt projet → servi sous `/<repo>/` ;
+- dépôt `<vous>.github.io` → servi à la racine `/`.
+
+Rien à configurer à la main : `BASE_PATH` et `SITE_ORIGIN` sont calculés à partir
+du dépôt et injectés au build. `.nojekyll` empêche Jekyll d'altérer le `dist/`.
+
+### Autres hôtes statiques
+
+Build → dossier `dist/`. Fallback SPA déjà fourni :
 
 - **Netlify / Cloudflare Pages** : `public/_redirects`
 - **Vercel** : `vercel.json`
 
+Pour un sous-chemin, buildez avec `BASE_PATH=/sous-chemin/ SITE_ORIGIN=https://...`.
 Les fichiers prérendus par modèle sont servis en priorité (bon SEO), les autres
 routes retombent sur l'app.
 
@@ -65,7 +88,7 @@ routes retombent sur l'app.
 
 ```
 src/
-  data/        templates.ts (29 modèles), categories.ts
+  data/        templates.ts (52 modèles), categories.ts
   components/  Header, SearchBar, CategoryList, LetterForm, LetterPreview,
                ActionBar, Disclaimer, LanguageToggle, InstallPrompt
   pages/       Home, LetterDetail, Drafts
