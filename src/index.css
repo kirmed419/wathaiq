@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #eef4fc;
+  --color-brand-100: #d6e3f7;
+  --color-brand-200: #aec8ef;
+  --color-brand-300: #7da6e4;
+  --color-brand-400: #4f82d4;
+  --color-brand-500: #2c63bd;
+  --color-brand-600: #1b4ea3;
+  --color-brand-700: #11448c;
+  --color-brand-800: #0e3470;
+  --color-brand-900: #0b2a59;
+  --font-arabic: 'NotoNaskhArabic', 'Arabic Typesetting', 'Traditional Arabic', serif;
+}
+
+@font-face {
+  font-family: 'NotoNaskhArabic';
+  src: url('/fonts/NotoNaskhArabic-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'NotoNaskhArabic';
+  src: url('/fonts/NotoNaskhArabic-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  background-color: #f4f7fc;
+  color: #16243a;
+}
+
+[dir="rtl"] body,
+.font-arabic {
+  font-family: var(--font-arabic);
+}
+
+#root {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The rendered letter keeps its own line breaks and a serif look on screen */
+.letter-body {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.9;
+}
+.letter-body.rtl {
+  font-family: var(--font-arabic);
+  line-height: 2.1;
+}
+
+/* ---- Print: only the letter, clean A4 ---- */
+@media print {
+  .no-print { display: none !important; }
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  #root > *:not(.print-root) { display: none !important; }
+  .print-root { display: block !important; }
+  .letter-print-wrapper {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 13pt;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    padding: 2.2cm 2cm;
+    max-width: 100%;
+    color: #000;
+  }
+  .letter-print-wrapper.rtl {
+    direction: rtl;
+    text-align: right;
+    font-family: var(--font-arabic);
+    line-height: 2.1;
+  }
+  @page { margin: 0; }
+}

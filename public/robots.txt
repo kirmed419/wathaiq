@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /brouillons
+
+Sitemap: https://talabi.app/sitemap.xml

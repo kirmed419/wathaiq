@@ -1,0 +1,4 @@
+# Netlify / Cloudflare Pages SPA fallback.
+# Existing static files (prerendered /lettre/<id>/index.html) are served first;
+# only unmatched routes fall back to the app shell.
+/*    /index.html   200
