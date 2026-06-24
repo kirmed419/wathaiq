@@ -21,7 +21,7 @@ interface LangCtx {
 
 const Ctx = createContext<LangCtx | null>(null);
 
-const STORAGE_KEY = 'talabi:lang';
+const STORAGE_KEY = 'wathaiq:lang';
 
 function detectInitial(): Lang {
   const saved = localStorage.getItem(STORAGE_KEY);

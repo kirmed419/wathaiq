@@ -29,7 +29,7 @@ export default function LetterDetail() {
   useSeo({
     title: template
       ? `${lang === 'ar' ? 'نموذج' : 'Modèle'} ${tplTitle(template, lang)}`
-      : 'Talabi',
+      : 'Wathaiq DZ',
     description: template
       ? (lang === 'ar' ? tplDesc(template, lang) : `${tplDesc(template, lang)} Modèle gratuit à copier ou exporter en PDF.`)
       : '',

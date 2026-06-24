@@ -1,0 +1,77 @@
+import type { ProcedureCategory } from '../types';
+
+// The 8 top-level domains that organize every administrative procedure.
+export const PROCEDURE_CATEGORIES: ProcedureCategory[] = [
+  {
+    id: 'etat-civil',
+    label_fr: 'État civil',
+    label_ar: 'الحالة المدنية',
+    blurb_fr: 'Naissance, mariage, décès, nationalité, fiche familiale',
+    blurb_ar: 'الميلاد، الزواج، الوفاة، الجنسية، البطاقة العائلية',
+    icon: '📜',
+  },
+  {
+    id: 'identite-voyage',
+    label_fr: 'Identité & Voyage',
+    label_ar: 'الهوية والسفر',
+    blurb_fr: 'Passeport, carte d’identité, permis, carte grise',
+    blurb_ar: 'جواز السفر، بطاقة التعريف، رخصة السياقة، البطاقة الرمادية',
+    icon: '🪪',
+  },
+  {
+    id: 'residence-justice',
+    label_fr: 'Résidence & Justice',
+    label_ar: 'الإقامة والعدالة',
+    blurb_fr: 'Certificat de résidence, casier judiciaire, légalisation',
+    blurb_ar: 'شهادة الإقامة، صحيفة السوابق، التصديق',
+    icon: '⚖️',
+  },
+  {
+    id: 'travail-protection-sociale',
+    label_fr: 'Travail & Sécurité sociale',
+    label_ar: 'العمل والضمان الاجتماعي',
+    blurb_fr: 'Chifa, CNAS, CASNOS, retraite, chômage, handicap, concours',
+    blurb_ar: 'الشفاء، الضمان الاجتماعي، التقاعد، البطالة، الإعاقة، المسابقات',
+    icon: '💼',
+  },
+  {
+    id: 'entreprise-commerce',
+    label_fr: 'Entreprise & Commerce',
+    label_ar: 'المؤسسة والتجارة',
+    blurb_fr: 'Registre de commerce, auto-entrepreneur, artisan, financement',
+    blurb_ar: 'السجل التجاري، المقاول الذاتي، الحرفي، التمويل',
+    icon: '🏢',
+  },
+  {
+    id: 'banque-finances',
+    label_fr: 'Banque & Finances',
+    label_ar: 'البنك والمالية',
+    blurb_fr: 'Numéro fiscal (NIF), compte CCP, carte Edahabia',
+    blurb_ar: 'الرقم الجبائي، الحساب البريدي الجاري، بطاقة الذهبية',
+    icon: '🏦',
+  },
+  {
+    id: 'logement-urbanisme',
+    label_fr: 'Logement & Urbanisme',
+    label_ar: 'السكن والعمران',
+    blurb_fr: 'AADL, logement social, permis de construire',
+    blurb_ar: 'عدل، السكن الاجتماعي، رخصة البناء',
+    icon: '🏠',
+  },
+  {
+    id: 'education',
+    label_fr: 'Éducation & Études',
+    label_ar: 'التعليم والدراسة',
+    blurb_fr: 'Bourse, inscription, scolarité, équivalence',
+    blurb_ar: 'المنحة، التسجيل، الدراسة، المعادلة',
+    icon: '🎓',
+  },
+  {
+    id: 'etranger-diaspora',
+    label_fr: 'Étrangers & Diaspora',
+    label_ar: 'الأجانب والجالية',
+    blurb_fr: 'Visa, carte de séjour, immatriculation consulaire',
+    blurb_ar: 'التأشيرة، بطاقة الإقامة، التسجيل القنصلي',
+    icon: '🌍',
+  },
+];

@@ -16,9 +16,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['fonts/**', 'icons/**'],
       manifest: {
-        name: 'طلبي Talabi',
-        short_name: 'Talabi',
-        description: 'Générateur de lettres administratives (demande manuscrite) pour l\'Algérie. Modèles en français et en arabe.',
+        name: 'Wathaiq DZ — وثائق',
+        short_name: 'Wathaiq DZ',
+        description: 'Tous les documents et démarches administratives en Algérie : pièces à fournir, où les obtenir, coûts et délais. Modèles de lettres inclus. Français et arabe.',
         theme_color: '#11448c',
         background_color: '#f4f7fc',
         display: 'standalone',

@@ -7,7 +7,7 @@ interface SeoOptions {
   path?: string;
 }
 
-const SITE = 'Talabi';
+const SITE = 'Wathaiq DZ';
 // Derive the canonical origin from wherever the app is actually served
 // (works for localhost, custom domains, and GitHub Pages subpaths alike).
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');

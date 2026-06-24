@@ -122,15 +122,21 @@ function wordMatches(word: string, token: string): boolean {
 }
 
 /**
- * Fuzzy match a template against a free-text query. Every query word must match
- * (substring or small edit distance) at least one word of the searchable text
- * (titles, descriptions, keywords) in either language. Tolerant of typos,
- * missing accents/apostrophes and Arabic spelling variants.
+ * Fuzzy match a free-text haystack against a query. Every query word must match
+ * (substring or small edit distance) at least one word of the haystack. Tolerant
+ * of typos, missing accents/apostrophes and Arabic spelling variants. Shared by
+ * the letter and procedure searches.
  */
-export function matchesQuery(t: LetterTemplate, q: string): boolean {
+export function fuzzyMatch(haystack: string, q: string): boolean {
   const needle = normalize(q);
   if (!needle) return true;
-  const tokens = normalize(
+  const tokens = normalize(haystack).split(' ');
+  return needle.split(' ').every((word) => tokens.some((tok) => wordMatches(word, tok)));
+}
+
+/** Fuzzy match a letter template against a free-text query (titles, desc, keywords, both languages). */
+export function matchesQuery(t: LetterTemplate, q: string): boolean {
+  return fuzzyMatch(
     [
       t.title_fr,
       t.title_ar,
@@ -138,6 +144,6 @@ export function matchesQuery(t: LetterTemplate, q: string): boolean {
       t.short_description_ar,
       ...t.seo_keywords_fr,
     ].join(' '),
-  ).split(' ');
-  return needle.split(' ').every((word) => tokens.some((tok) => wordMatches(word, tok)));
+    q,
+  );
 }

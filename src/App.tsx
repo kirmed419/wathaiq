@@ -8,8 +8,11 @@ import {
 } from 'react-router-dom';
 import { LangProvider } from './i18n';
 import Home from './pages/Home';
+import ProcedureDetail from './pages/ProcedureDetail';
+import Letters from './pages/Letters';
 import LetterDetail from './pages/LetterDetail';
 import Drafts from './pages/Drafts';
+import Legal from './pages/Legal';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -30,8 +33,11 @@ export default function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/document/:id" element={<ProcedureDetail />} />
+          <Route path="/lettres" element={<Letters />} />
           <Route path="/lettre/:id" element={<LetterDetail />} />
           <Route path="/brouillons" element={<Drafts />} />
+          <Route path="/mentions-legales" element={<Legal />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

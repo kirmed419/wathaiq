@@ -24,7 +24,7 @@ export default function Header({ showBack = false }: Props) {
           </Link>
         )}
         <Link to="/" className="flex min-w-0 flex-1 items-center gap-2.5">
-          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Talabi" width={48} height={48} className="h-12 w-12 shrink-0 rounded-xl bg-white p-1 shadow-sm ring-1 ring-white/30" />
+          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Wathaiq DZ" width={48} height={48} className="h-12 w-12 shrink-0 rounded-xl bg-white p-1 shadow-sm ring-1 ring-white/30" />
           <span className={`truncate text-xl font-extrabold tracking-tight ${lang === 'ar' ? 'font-arabic' : ''}`}>
             {t('app_name')}
           </span>

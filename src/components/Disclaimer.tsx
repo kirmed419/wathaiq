@@ -1,7 +1,14 @@
 import { useLang } from '../i18n';
 
-export default function Disclaimer({ compact = false }: { compact?: boolean }) {
+interface Props {
+  compact?: boolean;
+  /** Which disclaimer text to show. 'document' for procedure pages, 'letter' for letter pages. */
+  kind?: 'document' | 'letter';
+}
+
+export default function Disclaimer({ compact = false, kind = 'document' }: Props) {
   const { t } = useLang();
+  const body = kind === 'letter' ? t('disclaimer') : t('doc_disclaimer');
   return (
     <div
       className={`no-print flex gap-3 rounded-xl border border-amber-200 bg-amber-50 text-amber-900 ${
@@ -14,7 +21,7 @@ export default function Disclaimer({ compact = false }: { compact?: boolean }) {
         {!compact && (
           <p className="mb-0.5 font-semibold">{t('disclaimer_title')}</p>
         )}
-        <p className="leading-relaxed">{t('disclaimer')}</p>
+        <p className="leading-relaxed">{body}</p>
       </div>
     </div>
   );

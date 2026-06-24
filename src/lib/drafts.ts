@@ -9,7 +9,7 @@ export interface Draft {
   updatedAt: number;
 }
 
-const KEY = 'talabi:drafts';
+const KEY = 'wathaiq:drafts';
 
 export function loadDrafts(): Draft[] {
   try {

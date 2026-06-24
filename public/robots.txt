@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /brouillons
 
-Sitemap: https://talabi.app/sitemap.xml
+Sitemap: https://wathaiq.dz/sitemap.xml

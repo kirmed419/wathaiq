@@ -1,32 +1,45 @@
-# Talabi — طلبي
+# Wathaiq DZ · وثائق
 
-**Générateur de lettres administratives (demande manuscrite) pour l'Algérie.**
-Modèles prêts à l'emploi en **français** et en **arabe** : l'utilisateur choisit un
-type de lettre, remplit quelques champs, et obtient instantanément une lettre
-correctement formulée — à recopier à la main ou exporter en PDF.
+**Tous les documents et démarches administratives en Algérie, au même endroit.**
+Pour chaque démarche : la **liste exacte des pièces à fournir** (le dossier), **où**
+l'obtenir, le **coût**, les **délais**, le **portail officiel** et les **sources**.
+Modèles de **lettres** administratives inclus. En **français** et en **arabe**.
 
 Aucun compte, aucun backend, aucun tracking. Fonctionne **hors connexion** (PWA).
 
+> **Avertissement** · Wathaiq DZ est un service d'information indépendant, **sans
+> aucun lien avec le gouvernement algérien**. Les informations sont fournies à titre
+> indicatif et peuvent évoluer ; vérifiez toujours auprès de l'organisme officiel.
+> Voir la page **Mentions légales & avertissement** (`/mentions-legales`).
+
 ---
-
-## Stack
-
-- **Vite + React + TypeScript**
-- **Tailwind CSS v4** (`@tailwindcss/vite`)
-- **react-router-dom** — une URL indexable par modèle : `/lettre/:id`
-- **vite-plugin-pwa** — service worker, installable, fonctionne offline
-- **i18n** maison (`src/i18n/fr.json` / `ar.json`) + RTL complet pour l'arabe
-- Police arabe **auto-hébergée** (Noto Naskh Arabic, `public/fonts/`) → offline
-- Export PDF via `window.print()` + CSS print dédié (pas de lib lourde)
-- Brouillons en `localStorage` (page « Mes brouillons »)
 
 ## Contenu
 
-- **52 modèles** (français + arabe) dans `src/data/templates.ts`
-- 7 catégories : Emploi & Concours · Études & Bourse · État civil & Administration ·
-  Consulat & Diaspora · Banque & Finance · Logement · Réclamations
-- Chaque modèle : `fields` (formulaire dynamique), `body_fr` / `body_ar` avec
-  placeholders `{{champ}}`, et `seo_keywords_fr` (vraies requêtes Google).
+- **Cœur de l'app : ~28 procédures** (`src/data/procedures.ts`) réparties en
+  **8 domaines** (`src/data/procedureCategories.ts`) : État civil · Identité &
+  Voyage · Résidence & Justice · Travail & Sécurité sociale · Entreprise &
+  Commerce · Logement & Urbanisme · Éducation · Étrangers & Diaspora.
+  Chaque procédure : documents requis, où/coût/délai/validité, portail officiel,
+  conseils, lettres liées, **sources officielles** et date de révision.
+- **52 modèles de lettres** (`src/data/templates.ts`) · fonctionnalité secondaire,
+  accessible via `/lettres`, avec formulaire dynamique et export PDF.
+
+Les sources principales sont les portails officiels : `interieur.gov.dz`,
+`passeport.interieur.gov.dz`, `demande12s.interieur.gov.dz`, `mjustice.gov.dz`,
+`cnrc.dz`, `cnas.dz`, `casnos.com.dz`, `cnr.dz`, `anem.dz`, `anae.dz`,
+`aadl.com.dz`, `mesrs.dz`, `mfa.gov.dz`, `bawabatic.dz`.
+
+## Stack
+
+- **Vite + React + TypeScript**, **Tailwind CSS v4**
+- **react-router-dom** · URLs indexables : `/document/:id`, `/lettre/:id`, `/lettres`,
+  `/mentions-legales`
+- **vite-plugin-pwa** · installable, fonctionne hors connexion
+- **i18n** maison (`src/i18n/fr.json` / `ar.json`) + RTL complet pour l'arabe
+- Police arabe **auto-hébergée** (Noto Naskh Arabic) → offline
+- Listes de documents : **progression cochée** sauvegardée en `localStorage`
+- Brouillons de lettres en `localStorage`
 
 ## Développement
 
@@ -38,72 +51,46 @@ npm run preview    # sert le build de production
 npm run lint
 ```
 
-## SEO & croissance
+## SEO
 
-Le canal d'acquisition est la recherche organique. Au build, `scripts/prerender.mjs` :
+Au build, `scripts/prerender.mjs` génère un **HTML statique crawlable** par
+procédure (`dist/document/<id>/index.html`) et par lettre
+(`dist/lettre/<id>/index.html`) · `<title>`, `meta description`, canonical,
+Open Graph et **contenu visible sans JavaScript** (documents requis, sources) ·
+ainsi que `sitemap.xml`, `robots.txt` et `404.html`.
 
-- génère un **HTML statique crawlable par modèle** (`dist/lettre/<id>/index.html`)
-  avec `<title>`, `meta description`, canonical, Open Graph et le **contenu de la
-  lettre visible sans JavaScript** ;
-- génère `dist/sitemap.xml`, `dist/robots.txt` et `dist/404.html`.
-
-Origine canonique : côté client, elle est déduite automatiquement de l'URL servie
-(`window.location` + base), donc rien à coder en dur. Pour le prérendu (sitemap,
-canonical, Open Graph), passez `SITE_ORIGIN` au build (le workflow GitHub Pages le
-fait pour vous ; défaut local : `https://talabi.app`).
+Pour le prérendu, passez `SITE_ORIGIN` au build (défaut : `https://wathaiq.dz`).
 
 ## Déploiement
 
 ### GitHub Pages (prêt à l'emploi)
 
 Le workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) construit
-et publie le site à chaque push sur `main`.
+et publie le site à chaque push sur `main`. `BASE_PATH` et `SITE_ORIGIN` sont
+calculés automatiquement à partir du dépôt.
 
-1. Créez un dépôt GitHub et poussez le code :
-   ```bash
-   git remote add origin https://github.com/<vous>/<repo>.git
-   git push -u origin main
-   ```
-2. Dans **Settings → Pages**, réglez **Source** sur **GitHub Actions**.
-
-Le workflow détecte automatiquement le `base path` et l'URL :
-- dépôt projet → servi sous `/<repo>/` ;
-- dépôt `<vous>.github.io` → servi à la racine `/`.
-
-Rien à configurer à la main : `BASE_PATH` et `SITE_ORIGIN` sont calculés à partir
-du dépôt et injectés au build. `.nojekyll` empêche Jekyll d'altérer le `dist/`.
+1. Créez un dépôt GitHub et poussez le code.
+2. **Settings → Pages**, réglez **Source** sur **GitHub Actions**.
 
 ### Autres hôtes statiques
 
-Build → dossier `dist/`. Fallback SPA déjà fourni :
-
-- **Netlify / Cloudflare Pages** : `public/_redirects`
-- **Vercel** : `vercel.json`
-
-Pour un sous-chemin, buildez avec `BASE_PATH=/sous-chemin/ SITE_ORIGIN=https://...`.
-Les fichiers prérendus par modèle sont servis en priorité (bon SEO), les autres
-routes retombent sur l'app.
+Build → dossier `dist/`. Fallback SPA fourni : `public/_redirects` (Netlify /
+Cloudflare Pages) et `vercel.json` (Vercel). Les fichiers prérendus sont servis
+en priorité ; les autres routes retombent sur l'app.
 
 ## Structure
 
 ```
 src/
-  data/        templates.ts (52 modèles), categories.ts
-  components/  Header, SearchBar, CategoryList, LetterForm, LetterPreview,
-               ActionBar, Disclaimer, LanguageToggle, InstallPrompt
-  pages/       Home, LetterDetail, Drafts
-  lib/         letters.ts (rendu/placeholders), drafts.ts, seo.ts
+  data/        procedures.ts (cœur), procedureCategories.ts,
+               templates.ts (52 lettres), categories.ts
+  components/  ProcedureList, DocChecklist, QuickFacts, Header, SearchBar,
+               CategoryList, LetterForm, LetterPreview, ActionBar, Disclaimer,
+               LanguageToggle, InstallPrompt
+  pages/       Home (documents), ProcedureDetail, Letters, LetterDetail,
+               Drafts, Legal
+  lib/         procedures.ts (recherche + checklist), letters.ts, drafts.ts, seo.ts
   i18n/        fr.json, ar.json, index.tsx (LangProvider + RTL)
-public/
-  fonts/       Noto Naskh Arabic (woff2)
-  icons/       icônes PWA
-  logo.png, robots.txt, _redirects
-scripts/
-  prerender.mjs
+public/        fonts/, icons/, logo.png, robots.txt, _redirects
+scripts/       prerender.mjs
 ```
-
-## Avertissement produit
-
-Un bandeau rappelle sur chaque écran que ces modèles sont une **aide à la
-rédaction**, pas un document officiel, et que certaines démarches imposent de
-**recopier la lettre à la main**.
