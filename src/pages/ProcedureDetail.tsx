@@ -1,7 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import QuickFacts from '../components/QuickFacts';
-import DocChecklist from '../components/DocChecklist';
 import Disclaimer from '../components/Disclaimer';
 import { useLang } from '../i18n';
 import { useSeo } from '../lib/seo';
@@ -83,10 +82,34 @@ export default function ProcedureDetail() {
           </a>
         )}
 
-        {/* The dossier checklist */}
-        <div className="mt-6">
-          <DocChecklist procId={p.id} documents={p.documents} />
-        </div>
+        {/* The dossier: required documents */}
+        <section className="mt-6 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm sm:p-5">
+          <h2 className={`mb-3 text-lg font-bold text-slate-800 ${rtl ? 'font-arabic' : ''}`}>
+            {t('required_documents')}
+          </h2>
+          <ul className="space-y-2">
+            {p.documents.map((doc, i) => (
+              <li key={i} className="flex items-start gap-3 rounded-xl border border-slate-100 bg-white p-3">
+                <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400" />
+                <span className="min-w-0">
+                  <span className={`flex flex-wrap items-center gap-2 font-medium text-slate-800 ${rtl ? 'font-arabic' : ''}`}>
+                    {lang === 'ar' ? doc.ar : doc.fr}
+                    {doc.conditional && (
+                      <span className={`rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-800 ${rtl ? 'font-arabic' : ''}`}>
+                        {t('if_applicable')}
+                      </span>
+                    )}
+                  </span>
+                  {(doc.note_fr || doc.note_ar) && (
+                    <span className={`mt-0.5 block text-sm text-slate-500 ${rtl ? 'font-arabic' : ''}`}>
+                      {lang === 'ar' ? doc.note_ar : doc.note_fr}
+                    </span>
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         {/* Steps */}
         {steps && steps.length > 0 && (
